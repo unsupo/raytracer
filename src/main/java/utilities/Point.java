@@ -81,4 +81,8 @@ public class Point<T extends Number> {
     }public Point<T> divide(double scalar){
         return new Point<T>((T)Utility.divideNumbers(x,scalar),(T)Utility.divideNumbers(y,scalar),(T)Utility.divideNumbers(z,scalar));
     }
+
+    public Point<T> add(Point<T> point) {
+        return new Point<T>((T)Utility.addNumbers(x,point.getX()),(T)Utility.addNumbers(y,point.getY()),(T)Utility.addNumbers(z,point.getZ()));
+    }
 }

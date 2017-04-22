@@ -4,10 +4,7 @@ import lights.PointLight;
 import renders.Renderer;
 import shapes.Shape;
 import shapes.Sphere;
-import utilities.Color;
-import utilities.Point;
-import utilities.Ray;
-import utilities.Vector;
+import utilities.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +32,7 @@ public class Scene {
     private Camera camera;
     private List<Shape> shapes;
     private List<Light> lights;
+    private BVH bvh;
 
     static public void addShape(Shape shape){
         getScene().getShapesInstance().add(shape);
@@ -43,6 +41,8 @@ public class Scene {
     }
 
     public static List<Shape> getShapes() {
+        if(getScene().shapes == null)
+            getScene().shapes = new ArrayList<>();
         return getScene().shapes;
     }
 
@@ -63,6 +63,10 @@ public class Scene {
 
     public static void setCamera(Camera camera) {
         getScene().camera = camera;
+    }
+
+    public static BVH getBVH() {
+        return getScene().bvh;
     }
 
     private static class HIT{

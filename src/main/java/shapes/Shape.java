@@ -33,5 +33,9 @@ abstract public class Shape {
 
     abstract public double intersects(Ray ray);
 
+    abstract public Point<Double> getCenter();
 
+    abstract public boolean contains(Point<Double> point);
+
+    abstract public Double getRadius();
 }

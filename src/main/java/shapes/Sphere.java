@@ -39,23 +39,6 @@ public class Sphere extends Shape {
         if((t1>.1)&&(t1<t))
             t = t1;
         return t;
-
-//        Vector o = ray.getStart();
-////        Double d = ray.getEnd().getMagnitude();
-//        Vector u = o.subtract(ray.getEnd());
-//        Vector l = u.divide(u.getMagnitude());
-//        Vector oc = o.subtract(center);
-//        double b = 2*l.dotProduct(oc);
-//        double disc = b*b-(oc.getMagnitude()*oc.getMagnitude()-radius*radius);
-//        if(disc < 0) return -1;
-//        disc = Math.sqrt(disc);
-//        double t0 = -b - disc;
-//        double t1 = -b + disc;
-//        double t = (t0<t1)?t0:t1;
-//
-//        return t;//o.add(l.multiply(t)).getNormalizedPoint();
-
-//        return (ray.getEnd().subtract(ray.getStart())).multiply(t).add(ray.getStart()).getNormalizedPoint();
     }
 
     @Override
@@ -87,7 +70,8 @@ public class Sphere extends Shape {
         return result;
     }
 
-    public double getRadius() {
+    @Override
+    public Double getRadius() {
         return radius;
     }
 
@@ -95,8 +79,20 @@ public class Sphere extends Shape {
         this.radius = radius;
     }
 
+    @Override
     public Point<Double> getCenter() {
         return center;
+    }
+
+    @Override
+    public boolean contains(Point<Double> point) {
+        double  x = point.getX() - center.getX(),
+                y = point.getY() - center.getY(),
+                z = point.getZ() - center.getZ();
+
+        double sqrt = x*x+y*y+z*z;
+
+        return sqrt <= radius*radius;
     }
 
     public void setCenter(Point<Double> center) {

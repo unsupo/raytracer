@@ -9,7 +9,8 @@ import utilities.Vector;
  */
 public class Triangle extends Shape {
     private static final double EPSILON = 0.000001;
-    Point<Double> point1, point2, point3;
+    Point<Double> point1, point2, point3, center;
+    Double radius;
 
     public Triangle(Point<Double> point1, Point<Double> point2, Point<Double> point3) {
         this.point1 = point1;
@@ -19,6 +20,45 @@ public class Triangle extends Shape {
         point1 = new Point<>(x1,y1,z1);
         point2 = new Point<>(x2,y2,z2);
         point3 = new Point<>(x3,y3,z3);
+    }
+
+    @Override
+    public Point<Double> getCenter(){
+        if(center == null)
+            center = new Point<>(
+                (point1.getX()+point2.getX()+point3.getX())/3.,
+                (point1.getY()+point2.getY()+point3.getY())/3.,
+                (point1.getZ()+point2.getZ()+point3.getZ())/3.
+            );
+        return center;
+    }
+
+    private boolean check(Point<Double> p1, Point<Double> p2, Point<Double> a, Point<Double> b){
+        Vector c = new Vector(b.subtract(a));
+        Vector cp1 = c.crossProduct(new Vector(p1.subtract(a))),
+                cp2 = c.crossProduct(new Vector(p2.subtract(a)));
+        return cp1.dotProduct(cp2) >= 0;
+    }
+    @Override
+    public boolean contains(Point<Double> point) {
+        return check(point,point1,point2,point3) && check(point,point2,point1,point3)
+                && check(point,point3,point1,point2);
+    }
+
+    @Override
+    public Double getRadius() {
+        if(radius == null) {
+            Double m1 = new Vector(getCenter().subtract(point1)).getMagnitude(),
+                    m2 = new Vector(getCenter().subtract(point2)).getMagnitude(),
+                    m3 = new Vector(getCenter().subtract(point3)).getMagnitude();
+            Double max = m1;
+            if(m2 > max)
+                max = m2;
+            if(m3 > max)
+                max = m3;
+            radius = max;
+        }
+        return radius;
     }
 
     @Override

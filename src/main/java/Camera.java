@@ -40,6 +40,8 @@ public class Camera {
                                 new Ray(new Vector(width / 2., height / 2., 0.),
                                         new Vector((double) xx, (double) yy, distance))
                         );
+                        if(scene[xx][yy] == null)
+                            scene[xx][yy] = Color.BLACK;
                     }
                 });
             }

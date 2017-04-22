@@ -15,6 +15,20 @@ public class Plane extends Shape {
         this.normal = normal.normalized();
         this.point = point;
     }
+    @Override
+    public Point<Double> getCenter(){
+        return point;
+    }
+
+    @Override
+    public boolean contains(Point<Double> point) {
+        return new Vector(point.subtract(this.point)).dotProduct(normal) == 0;
+    }
+
+    @Override
+    public Double getRadius() {
+        return Double.MAX_VALUE;
+    }
 
     @Override
     public Vector getNormal(Point<Double> intersectionPoint) {
