@@ -40,6 +40,8 @@ public class RenderAsJPG extends Renderer {
         //create random image pixel by pixel
         for(int y = 0; y < height; y++){
             for(int x = 0; x < width; x++){
+                if(scene[x][y] == null)
+                    scene[x][y] = Color.BLACK;
                 int r = scene[x][y].getRed(); //red
                 int g = scene[x][y].getGreen(); //green
                 int b = scene[x][y].getBlue(); //blue

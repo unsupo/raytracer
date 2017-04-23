@@ -11,12 +11,7 @@ import utilities.Vector;
  */
 public class MatteMaterial extends Material {
     @Override
-    public Color getColor(Ray lightRay, Light l) {
+    public Color getColor(Ray lightRay, Light l, Vector normal, Point<Double> intersectionPoint) {
         return super.getColor().add(l.getMaterial().getColor()).multiply(l.getIntensity());
-    }
-
-    @Override
-    public Ray getReflectanceRay(Vector normal, Point<Double> intersectionPoint) {
-        return null;
     }
 }

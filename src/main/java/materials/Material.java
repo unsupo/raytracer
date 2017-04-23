@@ -29,6 +29,6 @@ abstract public class Material {
         this.color = color;
     }
 
-    abstract public Color getColor(Ray lightRay, Light l);
-    abstract public Ray getReflectanceRay(Vector normal, Point<Double> intersectionPoint);
+    abstract public Color getColor(Ray lightRay, Light l, Vector normal, Point<Double> intersectionPoint);
+//    abstract public Ray getReflectanceRay(Vector normal, Point<Double> intersectionPoint);
 }

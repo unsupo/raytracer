@@ -96,8 +96,70 @@ public class Triangle extends Shape {
         result = 31 * result + (point3 != null ? point3.hashCode() : 0);
         return result;
     }
-
+    public static class Intersection{//Möller–Trumbore intersection algorithm
+        public boolean intersected = false;
+        public Double distance;
+        public Double u;
+        public Double v;
+        public static Intersection createIntersection(Double[] origin, Double directionX, Double directionY, Double directionZ, Triangle f){
+            Double[] direction = {directionX,directionY,directionZ};
+            return new Intersection(origin,direction,f);
+        }
+        public static Intersection createIntersection(Double originX, Double originY, Double originZ, Double directionX, Double directionY, Double directionZ, Triangle f){
+            Double[] origin = {originX,originY,originZ};
+            Double[] direction = {directionX,directionY,directionZ};
+            return new Intersection(origin,direction,f);
+        }
+        public static final float EPSILON = .000001f;
+        public static void cross(Double[] dest,Double[] v1,Double[] v2){
+            dest[0] = v1[1]*v2[2]-v1[2]*v2[1];
+            dest[1] = v1[2]*v2[0]-v1[0]*v2[2];
+            dest[2] = v1[0]*v2[1]-v1[1]*v2[0];
+        }
+        public static Double dot(Double[] v1,Double[] v2){
+            return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
+        }
+        public static void sub(Double[] dest, Double[] v1, Double[] v2){
+            dest[0] = v1[0] - v2[0];
+            dest[1] = v1[1] - v2[1];
+            dest[2] = v1[2] - v2[2];
+        }
+        public Intersection(Double[] orig, Double[] dir, Triangle f){
+            Double t;
+            Double[] vert0 = {f.point1.getX(),f.point1.getY(),f.point1.getZ()};
+            Double[] vert1 = {f.point2.getX(),f.point2.getY(),f.point2.getZ()};
+            Double[] vert2 = {f.point3.getX(),f.point3.getY(),f.point3.getZ()};
+            Double[] edge1 = new Double[3];
+            Double[] edge2 = new Double[3];
+            Double[] tvec = new Double[3];
+            Double[] pvec = new Double[3];
+            Double[] qvec = new Double[3];
+            Double det;
+            Double inv_det;
+            sub(edge1, vert1, vert0);
+            sub(edge2, vert2, vert0);
+            cross(pvec, dir, edge2);
+            det = dot(edge1, pvec);
+            if(det > -EPSILON && det < EPSILON)return;
+            inv_det = 1f / det;
+            sub(tvec, orig, vert0);
+            u = dot(tvec, pvec) * inv_det;
+            if(u < 0 || u > 1)return;
+            cross(qvec, tvec, edge1);
+            v = dot(dir, qvec) * inv_det;
+            if(v < 0 || u + v > 1)return;
+            t = dot(edge2, qvec) * inv_det;
+            distance = t;
+            intersected = true;
+        }
+    }
     public double intersects(Ray ray) {
+        Point<Double> p1 = ray.getStart().getNormalizedPoint(),
+                        p2 = ray.getEnd().getNormalizedPoint();
+        Intersection s = new Intersection(new Double[]{p1.getX(),p1.getZ(),p1.getZ()},new Double[]{p2.getX(),p2.getZ(),p2.getZ()},this);
+        return s.intersected?s.distance:-1;
+
+        /*
         Vector D = ray.getEnd(),
                 O = ray.getStart();
         //find vectors for two edges sharing point1
@@ -134,5 +196,6 @@ public class Triangle extends Shape {
 //        Vector l = U.divide(U.getMagnitude());
 //        return O.add(l.multiply(t)).getNormalizedPoint();
         return t;//(ray.getEnd().subtract(ray.getStart())).multiply(t).add(ray.getStart()).getNormalizedPoint();
+        */
     }
 }

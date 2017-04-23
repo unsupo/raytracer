@@ -3,5 +3,5 @@
 random.png
 .idea/
 src/test/
-target/generated-sources/
-*.iml
+raytracer.iml
+target/

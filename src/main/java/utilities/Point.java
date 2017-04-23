@@ -85,4 +85,8 @@ public class Point<T extends Number> {
     public Point<T> add(Point<T> point) {
         return new Point<T>((T)Utility.addNumbers(x,point.getX()),(T)Utility.addNumbers(y,point.getY()),(T)Utility.addNumbers(z,point.getZ()));
     }
+
+    public Point<T> multiply(double d) {
+        return new Point<T>((T)Utility.multiplyNumbers(x,d),(T)Utility.multiplyNumbers(y,d),(T)Utility.multiplyNumbers(z,d));
+    }
 }
