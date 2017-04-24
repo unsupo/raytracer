@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 import static java.math.RoundingMode.*;
 
@@ -12,6 +13,10 @@ import static java.math.RoundingMode.*;
  * Created by jarndt on 3/7/17.
  */
 public class Utility {
+
+    public static double randomBetween(double min, double max){
+        return new Random().nextDouble()*(max-min) + min;
+    }
 
     public static Number addNumbers(Number... values) {
         Object o = null;

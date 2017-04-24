@@ -13,9 +13,8 @@ import shapes.Plane;
 import shapes.Shape;
 import shapes.Sphere;
 import shapes.Triangle;
-import utilities.BVH;
-import utilities.Color;
-import utilities.Point;
+import utilities.*;
+import utilities.Timer;
 import utilities.Vector;
 
 import java.io.IOException;
@@ -43,7 +42,10 @@ public class Runner {
 
 //        scene.Scene.addShape(new Triangle(new Point<Double>(0.,H,D+10),new Po3int<Double>(W,H,D+10),new Point<Double>(W/2,H/2,D-10)));
 
+        utilities.Timer timer = new Timer().start();
         Scene.render();
+        timer.stop();
+        System.out.println(timer.getTime());
     }
 
     public static List<Shape> readPLYFile(String file) {
@@ -123,38 +125,38 @@ public class Runner {
 //        scene.Scene.addShape(new Sphere(1,new Point<Double>(W/2.,H/2.,2*D)));
 //        scene.Scene.addLight(new PointLight());
 
-        int gap = 50;
+        int gap = 40;
 
-        Sphere s = new Sphere(35, new Point<Double>(W / 2. - gap, H / 2., D));
-        Material m = new ReflectantRefractantMaterial(false,true);
+        Sphere s = new Sphere(100, new Point<Double>(W / 2. - gap, H / 2.+40, D));
+        Material m = new MatteMaterial();
         m.setColor(Color.BLUE);
         s.setMaterial(m);
         Scene.addShape(s);
 
-        Sphere ss = new Sphere(35, new Point<Double>(W / 2. + gap, H / 2.+gap, D ));
-        Material mm = new ReflectantRefractantMaterial(true,false);
-        mm.setColor(Color.GREEN);
-        ss.setMaterial(mm);
-        Scene.addShape(ss);
+//        Sphere ss = new Sphere(35, new Point<Double>(W / 2. + gap, H / 2.+gap, D ));
+//        Material mm = new ReflectantRefractantMaterial(true,false);
+//        mm.setColor(Color.GREEN);
+//        ss.setMaterial(mm);
+//        Scene.addShape(ss);
+//
+//        Sphere sss = new Sphere(35, new Point<Double>(W / 2. + 3*gap, H / 2.+gap, D ));
+//        Material mmm = new ReflectantRefractantMaterial();
+//        mmm.setColor(Color.ORANGE);
+//        sss.setMaterial(mmm);
+//        Scene.addShape(sss);
+//
+//        Sphere ssss = new Sphere(35, new Point<Double>(W / 2. - 3*gap, H / 2., D ));
+//        Material mmmm = new MatteMaterial();
+//        mmmm.setColor(Color.YELLOW);
+//        ssss.setMaterial(mmmm);
+//        Scene.addShape(ssss);
 
-        Sphere sss = new Sphere(35, new Point<Double>(W / 2. + 3*gap, H / 2.+gap, D ));
-        Material mmm = new ReflectantRefractantMaterial();
-        mmm.setColor(Color.ORANGE);
-        sss.setMaterial(mmm);
-        Scene.addShape(sss);
-
-        Sphere ssss = new Sphere(35, new Point<Double>(W / 2. - 3*gap, H / 2., D ));
-        Material mmmm = new MatteMaterial();
-        mmmm.setColor(Color.YELLOW);
-        ssss.setMaterial(mmmm);
-        Scene.addShape(ssss);
-
-        double xdist = 20, disty = 20, up = 50, right = 50;
+        double xdist = 70, disty = 10, up = 50, right = 50;
 //        scene.Scene.addShape(new Triangle(0.+right,H+up,D,W+right,H+up,D,W/2.+right,H+up, 40*D));
         Scene.addShape(new Plane(new Vector(0., 0.5, 0.), new Point<Double>(0., (double) H * 3 / 2., 0.)));
 //        Scene.addLight(new AmbientLight(.2));
-        Scene.addLight(new PointLight(W / 2. - xdist, H / 2. - disty, 2 * D - 2 * D + 10, 1, 1));
-        Scene.addLight(new PointLight(-(W / 2. - xdist), H / 2. - disty, 2 * D - 2 * D + 10, 1, 1));
+        Scene.addLight(new PointLight(W / 2. - xdist, H / 2. - disty, 2 * D - 2 * D + 30, 1, 20));
+//        Scene.addLight(new PointLight(-(W / 2. - xdist), H / 2. - disty, 2 * D - 2 * D - 10, 1, 1));
     }
 
 }

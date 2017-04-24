@@ -125,21 +125,23 @@ public class Scene {
                 continue;
 
             //lambertian lighting calculations used for shadows
-            Ray lightRay = new Ray(normal, dist);
-            double lightIntersectionPoint;
-            if ((lightIntersectionPoint = l.intersects(lightRay))>=0) {
-                //See if it hits any other objects before the light source
-                List<HIT> points = getIntersectionPoints(lightRay,new HIT(lightIntersectionPoint,l));
-                //remove if it hit the same object (hit itself)
-                if(points.get(0).light==null) {
-                    if (points.get(0).shape.equals(s))
-                        points.remove(0);
-                }
-                //first hit object is a light then color the pixel
-                if(points.get(0).light != null) {
-                    double dt = 1;
-                    dt = dist.normalized().dotProduct(normal.normalized());
-                    c = c.add(s.getMaterial().getColor(lightRay, l, normal, intersectionPoint).multiply(dt));
+            for (int i = 0; i < 10; i++) {
+                Ray lightRay = new Ray(normal.add(new Vector(Utility.randomBetween(0,10),Utility.randomBetween(0,10),Utility.randomBetween(0,10))), dist);
+                double lightIntersectionPoint;
+                if ((lightIntersectionPoint = l.intersects(lightRay))>=0) {
+                    //See if it hits any other objects before the light source
+                    List<HIT> points = getIntersectionPoints(lightRay,new HIT(lightIntersectionPoint,l));
+                    //remove if it hit the same object (hit itself)
+                    if(points.get(0).light==null) {
+                        if (points.get(0).shape.equals(s))
+                            points.remove(0);
+                    }
+                    //first hit object is a light then color the pixel
+                    if(points.get(0).light != null) {
+                        double dt = 1;
+                        dt = dist.normalized().dotProduct(normal.normalized());
+                        c = c.add(s.getMaterial().getColor(lightRay, l, normal, intersectionPoint).multiply(dt));
+                    }
                 }
             }
         }

@@ -10,6 +10,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import static utilities.Utility.randomBetween;
+
 /**
  * Created by jarndt on 4/19/17.
  */
@@ -165,10 +167,6 @@ public class BVH extends Shape{
             }
             innerBvhs.add(bvh); //loop until you get a bvhshape not inside the other bvh shapes
         }
-    }
-
-    private double randomBetween(double min, double max){
-        return new Random().nextDouble()*(max-min) + min;
     }
 
     private void growBVHShape(Shape shape) {
